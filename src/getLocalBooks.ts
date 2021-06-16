@@ -1,8 +1,8 @@
 const fs = require('fs');
 const Path = require('path');
 
-import { Novel } from './NovelTreeeItem';
-const LocalNovelsPath = '/Users/zhangxing/Desktop/novel';
+import { Novel } from './NovelTreeItem';
+const LocalNovelsPath = '/Users/zhangxing/book';
 
 export function getLocalBooks(): Promise<Novel[]> {
   const files = fs.readdirSync(LocalNovelsPath);
