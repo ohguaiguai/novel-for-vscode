@@ -1,0 +1,25 @@
+const fs = require('fs');
+const Path = require('path');
+
+import { Novel } from './NovelTreeeItem';
+const LocalNovelsPath = '/Users/zhangxing/Desktop/zhufeng_vscode2011/novel';
+
+export function getLocalBooks(): Promise<Novel[]> {
+
+  // const files = fs.readdirSync(LocalNovelsPath);
+  const files = [] as any;
+  const localNovelList = [] as Novel[]
+  // console.log(files);
+  files.forEach((file: string) => {
+    const extname = Path.extname(file).substr(1);
+    if (extname === 'txt') {
+      const name = Path.basename(file, '.txt');
+      const path = Path.join(LocalNovelsPath, file);
+      localNovelList.push({
+        path,
+        name,
+      });
+    }
+  });
+  return Promise.resolve(localNovelList);
+}
