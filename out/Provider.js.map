@@ -1,1 +1,0 @@
-{"version":3,"file":"Provider.js","sourceRoot":"","sources":["../src/Provider.ts"],"names":[],"mappings":";;AACA,qDAAwD;AACxD,mDAAgD;AAEhD,MAAqB,YAAY;IAC/B,YAAY;IACZ,WAAW,CAAC,IAAW;QACrB,OAAO,IAAI,wBAAa,CAAC,IAAI,CAAC,CAAC;IACjC,CAAC;IACD,WAAW;IACX,WAAW;QACT,OAAO,6BAAa,EAAE,CAAC;IACzB,CAAC;CACF;AATD,+BASC"}

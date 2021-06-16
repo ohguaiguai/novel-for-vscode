@@ -2,14 +2,13 @@ const fs = require('fs');
 const Path = require('path');
 
 import { Novel } from './NovelTreeeItem';
-const LocalNovelsPath = '/Users/zhangxing/Desktop/zhufeng_vscode2011/novel';
+const LocalNovelsPath = '/Users/zhangxing/Desktop/novel';
 
 export function getLocalBooks(): Promise<Novel[]> {
-
-  // const files = fs.readdirSync(LocalNovelsPath);
-  const files = [] as any;
-  const localNovelList = [] as Novel[]
-  // console.log(files);
+  const files = fs.readdirSync(LocalNovelsPath);
+  // const files = [] as any;
+  // console.log('111', files);
+  const localNovelList = [] as Novel[];
   files.forEach((file: string) => {
     const extname = Path.extname(file).substr(1);
     if (extname === 'txt') {

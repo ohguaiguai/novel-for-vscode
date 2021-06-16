@@ -62,21 +62,21 @@
       ]
     },
     "viewsWelcome": [
-			{
-				"view": "novel-list",
-				"contents": "添加文件夹路径\n[Open Folder](command:vscode.openFolder)"
-			}
-		],
+      {
+        "view": "novel-list",
+        "contents": "添加文件夹路径\n[Open Folder](command:vscode.openFolder)"
+      }
+    ],
     "configuration": {
-			"title": "FileDir",
-			"properties": {
-				"fileDir.location": {
-					"type": "string",
-					"default": "",
-					"description": "自定义默认本地文件目录"
-				}
-			}
-		}
+      "title": "FileDir",
+      "properties": {
+        "fileDir.location": {
+          "type": "string",
+          "default": "",
+          "description": "自定义默认本地文件目录"
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
