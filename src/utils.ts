@@ -5,10 +5,11 @@ import * as Open from 'open';
 import { ProgressLocation, ProgressOptions, window, workspace } from 'vscode';
 import * as cheerio from 'cheerio';
 import DataProvider from './Provider';
+import { clear } from 'console';
 
 const DOMAIN = 'https://www.biquge.com.cn';
 // 这是mac下路径,windows要去win的路径, mac下xxx要替换自己主机名字
-const LocalNovelsPath = '/Users/zhangxing/book';
+const LocalNovelsPath = '/Users/zhangxing/desktop';
 // 请求
 const request = async (url: string): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -47,8 +48,9 @@ export class Notification {
     this.isStop = false;
     window.withProgress(this.options, async () => {
       await new Promise((resolve) => {
-        setInterval(() => {
+        const timer = setInterval(() => {
           if (this.isStop) {
+            clearInterval(timer);
             resolve(undefined);
           }
         }, 500);
@@ -68,19 +70,19 @@ export function openLocalDir() {
 
 export function getLocalBooks(): Promise<Novel[]> {
   const files = Fs.readdirSync(LocalNovelsPath);
-  const loaclnovellist = [] as any;
+  const localNovelList = [] as any;
   files.forEach((file: string) => {
     const extname = Path.extname(file).substr(1);
     if (extname === 'txt') {
       const name = Path.basename(file, '.txt');
       const path = Path.join(LocalNovelsPath, file);
-      loaclnovellist.push({
+      localNovelList.push({
         path,
         name,
       });
     }
   });
-  return Promise.resolve(loaclnovellist);
+  return Promise.resolve(localNovelList);
 }
 
 export const searchOnline = async function (provider: DataProvider) {
@@ -105,7 +107,7 @@ export const search = async (keyword: string) => {
   const result = [] as any;
   try {
     const res = await request(DOMAIN + '/search.php?q=' + encodeURI(keyword));
-    console.log(res);
+    // console.log(res);
 
     const $ = cheerio.load(res);
     $('.result-list .result-item.result-game-item').each(function (

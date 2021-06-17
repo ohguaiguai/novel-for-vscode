@@ -34,7 +34,8 @@ export function activate(context: ExtensionContext) {
     // commands.registerCommand(`novel.add`, () => {
     // 	provider.addFund()
     // }),
-    commands.registerCommand(`novel.refresh`, () => {
+    commands.registerCommand('novel.refresh', () => {
+      console.log('执行novel.refresh');
       provider.refresh(true);
     }),
     // commands.registerCommand('novel.item.remove', (fund) => {
@@ -42,7 +43,7 @@ export function activate(context: ExtensionContext) {
     // 	fundHandle.removeConfig(code)
     // 	provider.refresh()
     // }),
-    commands.registerCommand(`addFavorite`, function (args) {
+    commands.registerCommand('addFavorite', function (args) {
       const config = workspace.getConfiguration();
       let favorites: Novel[] = config.get('novel.favorites', []);
       favorites = [...favorites, args];
@@ -69,17 +70,16 @@ export function activate(context: ExtensionContext) {
           retainContextWhenHidden: true, // webview被隐藏时保持状态，避免被重置
         }
       );
+      // console.log('context.extensionPath', context.extensionPath);
       const jsSrc = panel.webview.asWebviewUri(
-        Uri.file(Path.join(context.extensionPath, 'static', 'localNovel.js'))
+        Uri.file(Path.join(context.extensionPath, './static', 'localNovel.js'))
       );
       const cssSrc = panel.webview.asWebviewUri(
-        Uri.file(Path.join(context.extensionPath, 'static', 'localNovel.css'))
+        Uri.file(Path.join(context.extensionPath, './static', 'localNovel.css'))
       );
       panel.webview.html = `<!DOCTYPE html>
 				<html>
-					<head>
-                        <link rel="stylesheet" href="${cssSrc}">
-                    </head>
+					<head><link rel="stylesheet" href="${cssSrc}"></head>
 					<body>
 						<div class="content">
 							<pre style="flex: 1 1 auto;white-space: pre-wrap;word-wrap: break-word;">
@@ -87,19 +87,25 @@ export function activate(context: ExtensionContext) {
 							<pre>
 						</div>
 					</body>
-					<script src="${jsSrc}">
-                    </script>
+					<script src="${jsSrc}"></script>
 				</html>`;
 
-      // 我们在这实践一下插件给webview发消息
-      const defaultProgess = {} as any;
-      defaultProgess[args.name] = 0;
-      panel.webview.postMessage({
-        command: 'goProgress',
-        progress: workspace
-          .getConfiguration()
-          .get('novel.progress', defaultProgess)[args.name],
-      });
+      // 给webview发消息
+      // const defaultProgess = {} as any;
+      // defaultProgess[args.name] = 0;
+      // console.log(
+      //   args.name,
+      //   workspace.getConfiguration().get('novel.progress', {} as any)[args.name]
+      // );
+
+      setTimeout(() => {
+        panel.webview.postMessage({
+          command: 'goProgress',
+          progress: workspace
+            .getConfiguration()
+            .get('novel.progress', {} as any)[args.name],
+        });
+      }, 1000);
 
       // 处理webview中报告的信息
       panel.webview.onDidReceiveMessage(
@@ -107,7 +113,9 @@ export function activate(context: ExtensionContext) {
           const progressSetting = workspace
             .getConfiguration()
             .get('novel.progress', {} as any);
+
           progressSetting[args.name] = message.progress;
+
           switch (message.command) {
             case 'updateProgress':
               return workspace

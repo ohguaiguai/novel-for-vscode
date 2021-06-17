@@ -23,6 +23,7 @@ export default class FavoriteProvider implements TreeDataProvider<Novel> {
   }
 
   async getChildren(element?: Novel | undefined): Promise<Novel[]> {
+    console.log('FavoriteProvider element', element);
     if (element) {
       return await getChapter(element.path);
     }

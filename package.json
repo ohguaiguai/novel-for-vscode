@@ -10,7 +10,8 @@
     "Other"
   ],
   "activationEvents": [
-    "onView:novel-list"
+    "onView:novel-list",
+    "onView:favorite-novel"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -64,7 +65,7 @@
         {
           "id": "novel-read",
           "title": "小说阅读",
-          "icon": "images/pdf.svg"
+          "icon": "images/book.svg"
         }
       ]
     },

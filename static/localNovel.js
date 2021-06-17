@@ -1,9 +1,11 @@
 (function () {
   // webview收插件消息
   window.addEventListener('message', (event) => {
+    console.log('message', event);
     const message = event.data; // The JSON data our extension sent
     switch (message.command) {
       case 'goProgress':
+        console.log('message', message.progress);
         window.scrollTo(0, document.body.scrollHeight * message.progress);
         break;
     }
